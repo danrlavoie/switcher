@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Game Remote</title>
+    
+	  
+   <!--- Adapted from CRT-C on the Shmups forum ---> 
+	  
+	  
+    
+   <!--- This Starts the Flexbox code which auto-resizes all the boxes and logos to fit ANY screen size --->
+
+	  <script>
+      function resetHeight(){
+		  setTimeout(function() {
+            document.body.style.height = window.innerHeight + "px";
+          }, 500);
+      }
+      window.addEventListener("resize", resetHeight);
+      window.addEventListener("orientationchange", resetHeight);
+      screen.orientation.addEventListener('change', resetHeight);
+      resetHeight();
+    </script>
+    <script>
+      function callEndpoint(endpoint, params) {
+        fetch(endpoint, {
+          method: "GET",
+          params,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        })
+        .then(response => response.json())
+        .then(result => {
+          // Remove any previous active selections
+          document.querySelectorAll('.box').forEach(el => el.classList.remove('active-selection'));
+          // Add a CSS decoration to the active selection
+          document.getElementById(result.id).classList.add('active-selection');
+        });
+      }
+      // Call on initial pageload
+      callEndpoint('/inputs/active');
+
+      // Every 10 seconds, if the tab is open, check the active console
+      setInterval(function() {
+        if (document.visibilityState === 'visible') {
+          callEndpoint('/inputs/active');
+        }
+      }, 10000);
+    </script>
+	
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+		    padding: 0;        
+      }
+
+      body {
+        background: #00b6f0;
+		    padding: 7px;
+      }
+        
+      .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        align-content: flex-start;
+        width: 100%;
+        height: 100%;
+        background-color: #00b6f0;
+        justify-content: center;
+      }
+
+      .flex-item {
+        flex: 1 1 25%;
+        align-items: center;
+        height: 25%;
+        padding: 5px;
+      }
+
+       .flex-item .box {
+        background-color: white;
+        height: 100%;
+        width: 100%;
+        position: relative;
+      }
+
+      .box img {
+        max-height: 100%;
+        max-width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+
+      .flex-item .box.active-selection {
+        background-color: blanchedalmond;
+      }
+
+      
+      @media only screen 
+      and (min-device-width: 375px) 
+      and (max-device-width: 812px) 
+      and (-webkit-min-device-pixel-ratio: 3)
+      and (orientation: portrait),
+      only screen 
+      and (min-device-width: 768px) 
+      and (max-device-width: 1024px) 
+      and (orientation: portrait) 
+      and (-webkit-min-device-pixel-ratio: 2),
+      only screen 
+      and (min-device-width: 768px) 
+      and (max-device-width: 1024px) 
+      and (orientation: portrait) 
+      and (-webkit-min-device-pixel-ratio: 1),
+      only screen 
+      and (min-device-width: 834px) 
+      and (max-device-width: 834px) 
+      and (orientation: portrait) 
+      and (-webkit-min-device-pixel-ratio: 2),
+      only screen 
+      and (min-device-width: 1024px) 
+      and (max-device-width: 1024px) 
+      and (orientation: portrait) 
+      and (-webkit-min-device-pixel-ratio: 2),
+      (max-device-width: 800px) 
+      and (orientation: portrait)
+      {
+        .flex-item {
+          flex: 1 1 33%;
+          height: 25%;
+        }
+      }
+
+    </style>
+	  
+	  
+    <!--- END Flexbox code --->
+
+
+	  
+	  
+  </head>
+
+  <body>    
+	  <!-- <div class="statusbar">
+      <div>Now playing: </div>
+      <div id="active-console-input" class="loading">...loading...</div>
+      <div>Mute</div>
+    </div> -->
+	  <!--- Grid with logos goes here. --->
+    <div class="flex-container">
+      <div class="flex-item">
+        <div class="box" id="1">
+          <a href="?action=select&input_id=1"><img src="images-png/nes-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="2">
+          <a href="?action=select&input_id=2"><img src="images-png/snes-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="3">
+          <a href="?action=select&input_id=3"><img src="images-png/genesis-mini-1-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="4">
+          <a href="?action=select&input_id=4"><img src="images-png/genesis-mini-2-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="5">
+          <a href="?action=select&input_id=5"><img src="images-png/pc-engine-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="6">
+          <a href="?action=select&input_id=6"><img src="images-png/analogue-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="7">
+          <a href="?action=select&input_id=7"><img src="images-png/xbox360-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="8">
+          <a href="?action=select&input_id=8"><img src="images-png/ps3-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="9">
+          <a href="?action=select&input_id=9"><img src="images-png/ps4-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="10">
+          <a href="?action=select&input_id=10"><img src="images-png/switch-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="11">
+          <a href="?action=select&input_id=11"><img src="images-png/genesis-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="12">
+          <a href="?action=select&input_id=12"><img src="images-png/ps2-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="13">
+          <a href="?action=select&input_id=13"><img src="images-png/dreamcast-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="14">
+          <a href="?action=select&input_id=14"><img src="images-png/og-xbox-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="15">
+          <a href="?action=select&input_id=15"><img src="images-png/n64-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+      <div class="flex-item">
+        <div class="box" id="16">
+          <a href="?action=select&input_id=16"><img src="images-png/wii-crt-c.png" alt="" type="button"></a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
