@@ -1,5 +1,5 @@
 import path from 'path';
-import config from './extron.json' with { type: "json" };
+import config from './config/config.json' with { type: "json" };
 import { selectInput, getCurrentGameConsole } from './extron_interactions.js';
 import Fastify from 'fastify';
 
